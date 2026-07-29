@@ -1,0 +1,27 @@
+{
+  "ej1a": {
+    "attempts": 4,
+    "success": true,
+    "code": "; Ejercicio Ejercicio 1a: Evaluar Expresión Aritmética (Stack)\n; Usa instrucciones PUSH, POP, ADD, SUB, MUL, DIV\nPUSH a\nPUSH b\nMUL\nPUSH c\nPUSH d\nMUL\nADD\nPUSH e\nPUSH f\nMUL\nADD\nPOP z"
+  },
+  "ej1b": {
+    "attempts": 7,
+    "success": true,
+    "code": "; Ejercicio Ejercicio 1b: Evaluar Expresión Compleja (Stack)\n; Usa instrucciones PUSH, POP, ADD, SUB, MUL, DIV\n\nPUSH a\nPUSH b\nMUL\nPUSH c\nADD\nPUSH d\nDIV\nPUSH e\nSUB\nPUSH f\nMUL\nPOP z"
+  },
+  "ej2_stack": {
+    "attempts": 1,
+    "success": true,
+    "code": "; Ejercicio Ejercicio 2a: Expresión Comparativa (Stack)\n; Usa instrucciones PUSH, POP, ADD, SUB, MUL, DIV\nPUSH a\nPUSH b\nSUB\nPUSH c\nPUSH h\nSUB\nMUL\nPUSH a\nPUSH h\nSUB\nDIV\nPOP z\n"
+  },
+  "ej5_cond": {
+    "attempts": 5,
+    "success": true,
+    "code": "; Ejercicio Ejercicio 5i: Estructura Condicional (Stack)\n; Usa instrucciones PUSH, POP, ADD, SUB, MUL, DIV\nPUSH c\nPUSH d\nTSTZ\nBOT THEN\nPUSH e\nPUSH f\nMUL\nPOP c\nJMP FIN\nTHEN:\nPUSH e\nPUSH f\nADD\nPOP c\n\nFIN:\nHALT\n\n"
+  },
+  "ej5_loop": {
+    "attempts": 1,
+    "success": true,
+    "code": "; Ejercicio Ejercicio 5ii: Bucle While (Stack)\n; Usa instrucciones PUSH, POP, ADD, SUB, MUL, DIV\n\nWHILE:\nPUSH i\nPUSH id\nTSTN \nBOT THEN\nJMP FIN\n\n\nTHEN:\nPUSH s\nPUSH i\nADD\nPOP s\nPUSH i\nPUSHC 1\nADD\nPOP i\nJMP WHILE\n\nFIN:\nHALT\n\n"
+  }
+}

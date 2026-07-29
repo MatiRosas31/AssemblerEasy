@@ -1,0 +1,275 @@
+[
+  {
+    "id": "ej1a",
+    "title": "Ejercicio 1a: Evaluar Expresión Aritmética (Stack)",
+    "description": "Escribir un programa utilizando el mínimo número de instrucciones sin operandos (máquina de pila) que resuelva la siguiente expresión:\n\n`z = a * b + c * d + e * f`",
+    "architecture": "stack",
+    "initialState": {
+      "memory": {
+        "a": 2,
+        "b": 3,
+        "c": 4,
+        "d": 5,
+        "e": 6,
+        "f": 7,
+        "z": 0
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"a": 2, "b": 3, "c": 4, "d": 5, "e": 6, "f": 7},
+        "outputs": {"z": 68}
+      },
+      {
+        "inputs": {"a": 1, "b": 2, "c": 3, "d": 4, "e": 5, "f": 6},
+        "outputs": {"z": 44}
+      }
+    ],
+    "hint": "Instrucciones: PUSH <var>, POP <var>, ADD, SUB, MUL, DIV.\nEjemplo:\nPUSH a\nPUSH b\nMUL\n..."
+  },
+  {
+    "id": "ej1b",
+    "title": "Ejercicio 1b: Evaluar Expresión Compleja (Stack)",
+    "description": "Escribir un programa en una máquina basada en pila que evalúe la siguiente expresión:\n\n`z = ((a * b + c) / d - e) * f`",
+    "architecture": "stack",
+    "initialState": {
+      "memory": {
+        "a": 4,
+        "b": 5,
+        "c": 16,
+        "d": 9,
+        "e": 2,
+        "f": 8,
+        "z": 0
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"a": 4, "b": 5, "c": 16, "d": 9, "e": 2, "f": 8},
+        "outputs": {"z": 16}
+      },
+      {
+        "inputs": {"a": 2, "b": 3, "c": 4, "d": 5, "e": 1, "f": 10},
+        "outputs": {"z": 10}
+      }
+    ],
+    "hint": "Recuerda el orden de las operaciones en la pila. La división dividirá el penúltimo elemento por el tope (A / B)."
+  },
+  {
+    "id": "ej2_stack",
+    "title": "Ejercicio 2a: Expresión Comparativa (Stack)",
+    "description": "Escribir un programa equivalente para una máquina basada en Pila (0 operandos) que resuelva:\n\n`z = (a - b) * (c - h) / (a - h)`",
+    "architecture": "stack",
+    "initialState": {
+      "memory": {
+        "a": 10,
+        "b": 4,
+        "c": 8,
+        "h": 6,
+        "z": 0
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"a": 10, "b": 4, "c": 8, "h": 6},
+        "outputs": {"z": 3}
+      },
+      {
+        "inputs": {"a": 8, "b": 2, "c": 9, "h": 5},
+        "outputs": {"z": 8}
+      }
+    ],
+    "hint": "Divide el problema en subtérminos. Evalúa (a-b), luego (c-h), multiplícalos, luego evalúa (a-h) y finalmente divide y guarda en z."
+  },
+  {
+    "id": "ej2_acc",
+    "title": "Ejercicio 2b: Expresión Comparativa (Acumulador)",
+    "description": "Escribir un programa equivalente para una máquina basada en Acumulador (1 operando) que resuelva:\n\n`z = (a - b) * (c - h) / (a - h)`",
+    "architecture": "accumulator",
+    "initialState": {
+      "memory": {
+        "a": 10,
+        "b": 4,
+        "c": 8,
+        "h": 6,
+        "z": 0,
+        "t": 0,
+        "w": 0
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"a": 10, "b": 4, "c": 8, "h": 6},
+        "outputs": {"z": 3}
+      },
+      {
+        "inputs": {"a": 8, "b": 2, "c": 9, "h": 5},
+        "outputs": {"z": 8}
+      }
+    ],
+    "hint": "Instrucciones: LDA <var>, STA <var>, ADD <var>, SUB <var>, MUL <var>, DIV <var>.\nUsa variables temporales como 't' y 'w' para guardar resultados parciales si es necesario."
+  },
+  {
+    "id": "ej2_reg2",
+    "title": "Ejercicio 2c: Expresión Comparativa (Registros 2-Op)",
+    "description": "Escribir un programa equivalente para una máquina basada en Registros de 2 operandos que evalúe:\n\n`z = (a - b) * (c - h) / (a - h)`\n\nDispones de los registros `R0` a `R7`. El registro `R7` es de solo lectura y siempre contiene `0`.\n*Sintaxis*: `MOV X, Y` (Y <- X), `SUB X, Y` (Y <- X - Y), etc.",
+    "architecture": "register-2op",
+    "initialState": {
+      "memory": {
+        "a": 10,
+        "b": 4,
+        "c": 8,
+        "h": 6,
+        "z": 0
+      },
+      "registers": {
+        "R0": 0, "R1": 0, "R2": 0, "R3": 0, "R4": 0, "R5": 0, "R6": 0, "R7": 0
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"a": 10, "b": 4, "c": 8, "h": 6},
+        "outputs": {"z": 3}
+      },
+      {
+        "inputs": {"a": 8, "b": 2, "c": 9, "h": 5},
+        "outputs": {"z": 8}
+      }
+    ],
+    "hint": "Usa registros como R0, R1 para guardar los resultados intermedios. Recuerda que R7 siempre vale 0 y no se puede modificar."
+  },
+  {
+    "id": "ej2_reg3",
+    "title": "Ejercicio 2d: Expresión Comparativa (Registros 3-Op)",
+    "description": "Escribir un programa equivalente para una máquina basada en Registros de 3 operandos que evalúe:\n\n`z = (a - b) * (c - h) / (a - h)`\n\n*Sintaxis*: `ADD X, Y, Z` (Z <- X + Y), `SUB X, Y, Z` (Z <- X - Y), `MUL X, Y, Z` (Z <- X * Y), `DIV X, Y, Z` (Z <- X / Y), y `MOV Y, X` (X <- Y). Puedes usar los registros `R0` a `R7`.",
+    "architecture": "register-3op",
+    "initialState": {
+      "memory": {
+        "a": 10,
+        "b": 4,
+        "c": 8,
+        "h": 6,
+        "z": 0
+      },
+      "registers": {
+        "R0": 0, "R1": 0, "R2": 0, "R3": 0, "R4": 0, "R5": 0, "R6": 0, "R7": 0
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"a": 10, "b": 4, "c": 8, "h": 6},
+        "outputs": {"z": 3}
+      },
+      {
+        "inputs": {"a": 8, "b": 2, "c": 9, "h": 5},
+        "outputs": {"z": 8}
+      }
+    ],
+    "hint": "Las instrucciones de 3 operandos son muy potentes. Puedes hacer restas como `SUB c, h, R0` (R0 <- c - h) en un solo paso."
+  },
+  {
+    "id": "ej4a",
+    "title": "Ejercicio 4a: Evaluar Expresión (Acumulador)",
+    "description": "Dada una máquina basada en acumulador, escribir el código de un programa con la mínima cantidad de instrucciones posibles que evalúe la expresión:\n\n`g = (a + b) * c - (d + e) * f`",
+    "architecture": "accumulator",
+    "initialState": {
+      "memory": {
+        "a": 3,
+        "b": 5,
+        "c": 4,
+        "d": 2,
+        "e": 1,
+        "f": 6,
+        "g": 0,
+        "t": 0
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"a": 3, "b": 5, "c": 4, "d": 2, "e": 1, "f": 6},
+        "outputs": {"g": 14}
+      },
+      {
+        "inputs": {"a": 1, "b": 2, "c": 5, "d": 3, "e": 4, "f": 2},
+        "outputs": {"g": 1}
+      }
+    ],
+    "hint": "Calcula primero una parte (por ejemplo, `(d+e)*f`), guárdala en una variable temporal `t`, luego calcula `(a+b)*c` en el acumulador y réstale `t`."
+  },
+  {
+    "id": "ej5_cond",
+    "title": "Ejercicio 5i: Estructura Condicional (Stack)",
+    "description": "Utilizando una máquina de pila con instrucciones extendidas, escribir el código equivalente al siguiente fragmento en C:\n\n`c = (c == d) ? e + f : e * f;`\n\n*Instrucciones adicionales disponibles*:\n* `PUSHC <const>`: Coloca una constante en la pila.\n* `TST` (o `TSTZ`): Saca B (tope) y A (siguiente) y calcula A - B. Si es 0 mete 1 en la pila, si no mete 0.\n* `BOT <label>`: Saca el tope de la pila. Si es 1 salta a la dirección/etiqueta; si no, continúa.",
+    "architecture": "stack",
+    "initialState": {
+      "memory": {
+        "c": 5,
+        "d": 5,
+        "e": 3,
+        "f": 4
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"c": 5, "d": 5, "e": 3, "f": 4},
+        "outputs": {"c": 7}
+      },
+      {
+        "inputs": {"c": 5, "d": 6, "e": 3, "f": 4},
+        "outputs": {"c": 12}
+      }
+    ],
+    "hint": "Sintaxis para estructura condicional (IF-THEN-ELSE) con etiquetas explícitas:\n\n; 1. Evaluar condición\nPUSH c\nPUSH d\nTST\nBOT THEN    ; Salta si es 1 (Verdadero)\n\n; 2. Rama ELSE (Falso)\n; [instrucciones multiplicación y guardar]\nJMP FIN     ; Salta al final\n\n; 3. Rama THEN (Verdadero)\nTHEN:\n; [instrucciones suma y guardar]\n\nFIN:\nHALT\n\nNota: Si no usas etiquetas explícitas (THEN: y FIN:), el simulador las deducirá usando 'BOT FIN' como salto al final del ELSE, considerando THEN la línea siguiente a esta."
+  },
+  {
+    "id": "ej5_loop",
+    "title": "Ejercicio 5ii: Bucle While (Stack)",
+    "description": "Utilizando la máquina de pila extendida, escribir el programa equivalente a este bucle:\n\n```c\ns = 0;\ni = 1;\nwhile (i < id) {\n    s = s + i;\n    i = i + 1;\n}\n```\n\n*Nota*: `TSTN` extrae B (tope) y A (siguiente) y calcula A - B. Si es menor que cero (A < B) mete 1 en la pila, si no mete 0.",
+    "architecture": "stack",
+    "initialState": {
+      "memory": {
+        "s": 0,
+        "i": 1,
+        "id": 5
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"s": 0, "i": 1, "id": 5},
+        "outputs": {"s": 10, "i": 5}
+      },
+      {
+        "inputs": {"s": 0, "i": 1, "id": 1},
+        "outputs": {"s": 0, "i": 1}
+      }
+    ],
+    "hint": "Estructura típica de bucle WHILE (i < id) con etiquetas explícitas:\n\nLOOP:\n; 1. Evaluar condición\nPUSH i\nPUSH id\nTSTN        ; Deja 1 en pila si i < id, si no 0\nBOT THEN    ; Salta al cuerpo si es 1\nJMP FIN     ; Sale del bucle si es 0\n\n; 2. Cuerpo del bucle\nTHEN:\n; [instrucciones cuerpo (sumar i a s, incrementar i)]\nJMP LOOP    ; Vuelve al inicio a re-evaluar\n\nFIN:\nHALT"
+  },
+  {
+    "id": "ej9a",
+    "title": "Ejercicio 9a: Arquitectura UDE Limitada (Registros)",
+    "description": "La CPU dispone de 8 registros `R0` a `R7`. `R7` es Read-Only y siempre vale `0`. El juego de instrucciones SOLO incluye:\n* `ADD Ri, X, Rj` (Rj <- Ri + Mem[X]) con i = 0..7, j = 0..6\n* `ADD Ri, Rj, X` (Mem[X] <- Ri + Rj) con i, j = 0..7\n\nEscribir un segmento de programa que sume los contenidos de las posiciones de memoria `2400` y `2500` y almacene el resultado en la posición `2600`.",
+    "architecture": "register-custom-9a",
+    "initialState": {
+      "memory": {
+        "2400": 15,
+        "2500": 25,
+        "2600": 0
+      },
+      "registers": {
+        "R0": 0, "R1": 0, "R2": 0, "R3": 0, "R4": 0, "R5": 0, "R6": 0, "R7": 0
+      }
+    },
+    "testCases": [
+      {
+        "inputs": {"2400": 15, "2500": 25, "2600": 0},
+        "outputs": {"2600": 40}
+      },
+      {
+        "inputs": {"2400": 100, "2500": 200, "2600": 0},
+        "outputs": {"2600": 300}
+      }
+    ],
+    "hint": "Como R7 es siempre 0, puedes cargar un valor en un registro sumándolo con R7:\n`ADD R7, 2400, R0` => R0 <- 0 + Mem[2400].\nLuego suma Mem[2500] a R0 y guárdalo en R1, y por último escribe R1 a Mem[2600]."
+  }
+]
