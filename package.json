@@ -1,0 +1,8 @@
+{
+  "name": "assemblereasy",
+  "version": "1.0.0",
+  "description": "IDE de Simulación de Arquitecturas CPU",
+  "scripts": {
+    "start": "npx -y http-server -p 5000"
+  }
+}

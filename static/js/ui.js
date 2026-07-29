@@ -77,15 +77,61 @@ document.addEventListener('DOMContentLoaded', () => {
     loadSandbox('stack');
 
     // ----------------------------------------------------
-    // API CALLS
+    // PERSISTENCIA EN LOCAL STORAGE
     // ----------------------------------------------------
+    const STORAGE_KEY = 'assemblereasy_progress';
+
+    function getLocalProgress() {
+        try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {};
+        } catch (e) {
+            console.error("Error reading progress from localStorage:", e);
+            return {};
+        }
+    }
+
+    function saveLocalProgress(exerciseId, code, success) {
+        try {
+            const progress = getLocalProgress();
+            if (!progress[exerciseId]) {
+                progress[exerciseId] = {
+                    attempts: 0,
+                    success: false,
+                    code: ""
+                };
+            }
+            progress[exerciseId].attempts += 1;
+            progress[exerciseId].code = code;
+            progress[exerciseId].success = progress[exerciseId].success || success;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+            return true;
+        } catch (e) {
+            console.error("Error saving progress to localStorage:", e);
+            return false;
+        }
+    }
+
     function fetchExercises() {
-        fetch('/api/exercises')
-            .then(res => res.json())
+        fetch('exercises.json')
+            .then(res => {
+                if (!res.ok) throw new Error("No se pudo cargar el archivo de ejercicios");
+                return res.json();
+            })
             .then(data => {
-                exercises = data;
+                const progress = getLocalProgress();
+                // Combinar la lista estática de ejercicios con el progreso local del alumno
+                exercises = data.map(ex => {
+                    const exProgress = progress[ex.id] || {
+                        attempts: 0,
+                        success: false,
+                        code: ""
+                    };
+                    return { ...ex, progress: exProgress };
+                });
+                
                 renderExercisesList();
-                // If there's an active exercise reload it to sync progress
+                // Si hay un ejercicio activo, recargarlo para sincronizar el progreso
                 if (selectedExercise) {
                     const updatedEx = exercises.find(e => e.id === selectedExercise.id);
                     if (updatedEx) {
@@ -96,29 +142,18 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .catch(err => {
                 console.error("Error fetching exercises:", err);
-                logToConsole("Error al comunicarse con el servidor backend.", "red");
+                logToConsole("Error al cargar los ejercicios desde el archivo JSON local.", "red");
             });
     }
 
     function submitProgress(exerciseId, code, success) {
-        fetch(`/api/exercises/${exerciseId}/submit`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code, success })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.status === 'success') {
-                // Refresh exercise list to update success status badges
-                fetchExercises();
-            } else {
-                logToConsole("No se pudo persistir el progreso en el backend: " + data.message, "yellow");
-            }
-        })
-        .catch(err => {
-            console.error("Error saving progress:", err);
-            logToConsole("Error de red al guardar el progreso.", "yellow");
-        });
+        const saved = saveLocalProgress(exerciseId, code, success);
+        if (saved) {
+            // Refrescar la lista de ejercicios para actualizar los badges de éxito
+            fetchExercises();
+        } else {
+            logToConsole("Error al guardar el progreso en el LocalStorage.", "yellow");
+        }
     }
 
     // ----------------------------------------------------
